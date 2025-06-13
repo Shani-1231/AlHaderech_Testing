@@ -1,0 +1,21 @@
+# קונפיגורציית PyCharm
+.idea/
+
+# סביבת פיתוח וירטואלית
+.venv/
+venv/
+
+# קבצים זמניים של Python
+__pycache__/
+*.pyc
+
+# קבצים של מערכת הפעלה
+.DS_Store
+Thumbs.db
+
+# קבצים רגישים
+config.json
+
+# דוחות Allure
+reports/
+
