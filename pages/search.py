@@ -1,7 +1,8 @@
-from pages.base_page import Base
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.ie.webdriver import WebDriver
+from selenium.webdriver.common.keys import Keys
+from pages.base_page import Base
 
 class Search(Base):
     def __init__(self, driver):
@@ -10,6 +11,7 @@ class Search(Base):
     SEARCH_FIELD = (By.ID, "search-input-d07fac2")
     SEARCH_BTN = (By.XPATH, "//i[@class='fas fa-search']")
     SEARCH_RESULTS = (By.XPATH, "//h2[@class='woocommerce-loop-product__title']")
+    NO_RESULTS_MESSAGE = (By.CLASS_NAME, "woocommerce-info")
 
 
     def get_search_input(self):
@@ -21,15 +23,21 @@ class Search(Base):
     def typed_value(self):
         return self.driver.find_element(*self.SEARCH_FIELD).get_attribute("value")
 
-    def clear_the_search_field(self):
+    def clear_search_field(self):
         self.driver.find_element(*self.SEARCH_FIELD).clear()
 
-    def click_the_search_button(self):
+    def click_search_button(self):
         self.safe_click(self.SEARCH_BTN)
 
-    def search_results(self):
-        return self.driver.find_elements(*self.SEARCH_RESULTS)
+    def click_enter(self):
+        self.driver.find_element(*self.SEARCH_FIELD).send_keys(Keys.ENTER)
+        time.sleep(1.5)
 
     def get_results_titles(self):
-        elements = self.search_results()
+        elements = self.driver.find_elements(*self.SEARCH_RESULTS)
         return [el.text for el in elements]
+
+    def get_no_results_message(self):
+        no_results_message = self.get_element_text(self.NO_RESULTS_MESSAGE)
+        return no_results_message
+        # return self.driver.find_element(*self.NO_RESULTS_MESSAGE).text

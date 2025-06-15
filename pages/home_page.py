@@ -1,7 +1,7 @@
-from pages.base_page import Base
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.ie.webdriver import WebDriver
+from pages.base_page import Base
 
 class HomePage(Base):
     def __init__(self, driver):

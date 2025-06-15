@@ -18,3 +18,5 @@ def test_006_logo_click_redirects_to_home(browser):
     page.click_logo()
     assert browser.current_url == "https://al-haderech.co.il/", "המעבר לעמוד הבית לא הצליח"
 
+
+
