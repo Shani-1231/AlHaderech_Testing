@@ -14,22 +14,26 @@ class Base:
         self.driver: WebDriver = driver
 
 
-    def safe_click(self, locator, timeout=10, wait_after_click=1.5):
+    def safe_click(self, locator, timeout=10, wait_after_click=1.5, remove_highlight=False):
         """
         לחיצה בטוחה על אלמנט:
-        מנסה רגיל, ואם נכשל - לוחץ עם JavaScript.
-
-        הערה חשובה:
-        הפרמטר locator הוא טופל שלם (למשל: (By.ID, "some-id")),
+    מנסה קודם בלחיצה רגילה אחרי גלילה והדגשה,
+    ואם נכשל - לוחץ עם JavaScript כולל גלילה והדגשה.
+        ניתן לבחור אם להסיר את ההדגשה לאחר הלחיצה.
+        הערה:
+        הפרמטר locator הוא טאפל שלם (למשל: (By.ID, "some-id")),
         ואין צורך לפרק אותו כאן עם כוכבית.
-
         - לעומת זאת, כשקוראים ישירות לפונקציות של selenium כמו find_element,
-  יש לפרק את הטופל עם כוכבית (*locator) כדי להעביר שני ארגומנטים נפרדים.
+  יש לפרק את הטאפל עם כוכבית (*locator) כדי להעביר שני ארגומנטים נפרדים.
         """
         try:
             element = WebDriverWait(self.driver, timeout).until(
                 EC.element_to_be_clickable(locator)
             )
+            # גלילה והדגשה
+            self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+            self.driver.execute_script("arguments[0].style.outline='2px solid red';", element)
+            time.sleep(0.5)  # זמן קצר לראות את ההדגשה
             element.click()
         except (ElementClickInterceptedException, WebDriverException) as e:
             print(f"שגיאה בלחיצה רגילה: {e}. מנסה דרך JavaScript...")
@@ -37,8 +41,14 @@ class Base:
                 EC.presence_of_element_located(locator)
             )
             self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+            self.driver.execute_script("arguments[0].style.outline='2px solid red';", element)
+            time.sleep(0.5)
             self.driver.execute_script("arguments[0].click();", element)
-
+        if remove_highlight:
+            try:
+                self.driver.execute_script("arguments[0].style.outline = '';", element)
+            except Exception as e:
+                print(f"⚠️ שגיאה בהסרת ההדגשה: {e}")
         if wait_after_click:
             time.sleep(wait_after_click)
 
@@ -61,12 +71,13 @@ class Base:
 
     def safe_send_keys(self, locator, text, timeout=10):
         """
-        הכנסת טקסט לשדה לאחר המתנה שהוא נטען ונהיה לחיץ
+        הכנסת טקסט לשדה לאחר המתנה שהוא נטען ונהיה לחיץ + גלילה לאלמנט
         """
         try:
             element = WebDriverWait(self.driver, timeout).until(
                 EC.element_to_be_clickable(locator)
             )
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
             element.clear()
             element.send_keys(text)
         except TimeoutException:

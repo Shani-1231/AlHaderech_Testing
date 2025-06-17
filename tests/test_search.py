@@ -33,7 +33,7 @@ def test_017_search_valid_input_with_button(homepage):
     matching_results = [title for title in titles if search_value.lower() in title.lower()]
     assert len(matching_results) > 0, "לא נמצאה אף תוצאה רלוונטית למילת החיפוש"
 
-def test_25_search_valid_input_with_enter(homepage):
+def test_025_search_valid_input_with_enter(homepage):
     page = Search(homepage)
     search_value = "ברוש"
     page.type_in_search_field(search_value)
@@ -46,7 +46,7 @@ def test_25_search_valid_input_with_enter(homepage):
     matching_results = [title for title in titles if search_value.lower() in title.lower()]
     assert len(matching_results) > 0, "לא נמצאה אף תוצאה רלוונטית למילת החיפוש"
 
-def test_18_search_invalid_input_shows_no_results(homepage):
+def test_018_search_invalid_input_shows_no_results(homepage):
     page = Search(homepage)
     invalid_input = "aa1122"
     page.type_in_search_field(invalid_input)
@@ -54,8 +54,6 @@ def test_18_search_invalid_input_shows_no_results(homepage):
     assert homepage.current_url != "https://al-haderech.co.il/", "הכתובת נשארה עמוד הבית, ולא עמוד- לא נמצאו מוצרים"
     no_results_message = page.get_no_results_message()
     assert "לא נמצאו מוצרים" in no_results_message, "לא מופיעה ההודעה:'לא נמצאו מוצרים' "
-
-
 
 
 

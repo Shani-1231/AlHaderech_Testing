@@ -40,4 +40,4 @@ class Search(Base):
     def get_no_results_message(self):
         no_results_message = self.get_element_text(self.NO_RESULTS_MESSAGE)
         return no_results_message
-        # return self.driver.find_element(*self.NO_RESULTS_MESSAGE).text
+

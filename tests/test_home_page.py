@@ -1,5 +1,5 @@
-from pages.home_page import HomePage
 import pytest
+from pages.home_page import HomePage
 
 def test_004_homepage_loads_successfully(homepage):
     page = HomePage(homepage)

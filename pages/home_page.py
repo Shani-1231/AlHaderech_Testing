@@ -12,7 +12,7 @@ class HomePage(Base):
     TOP_MENU_ITEMS = (By.CSS_SELECTOR, ".jet-menu > li > a.top-level-link")
     SUB_MENU_ITEMS = (By.CSS_SELECTOR, ".jet-sub-menu li a")
 
-    # דוגמה: קריאה לפונקציית selenium עם פירוק טופל
+    # דוגמה: קריאה לפונקציית selenium עם פירוק טאפל
     # element = self.driver.find_element(*locator)
     def logo_is_displayed(self):
         return self.driver.find_element(*self.LOGO).is_displayed()
