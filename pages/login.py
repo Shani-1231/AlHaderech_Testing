@@ -27,10 +27,8 @@ class Login(Base):
         return self.driver.find_element(*self.ERROR_MESSAGE).is_displayed()
 
     def get_greeting_text(self):
-        try:
-            return self.driver.find_element(*self.GREETING_MESSAGE).text
-        except NoSuchElementException:
-            return ""
+        return self.get_element_text(self.GREETING_MESSAGE)
+
 
 
 

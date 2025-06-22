@@ -1,26 +1,26 @@
 import pytest
 from pages.search import Search
 
-def test_015_search_field_is_displayed(homepage):
+def test_019_search_field_is_displayed(homepage):
     page = Search(homepage)
     search_input = page.get_search_input()
     assert search_input.is_displayed(), "שדה החיפוש לא מוצג"
     assert search_input.is_enabled(), "שדה החיפוש אינו פעיל להזנה"
     assert search_input.get_attribute("placeholder") == "מה אתם מחפשים?" , "טקסט הפלייסהולדר שגוי"
 
-def test_003_search_input_reflects_user_typing(homepage):
+def test_020_search_input_reflects_user_typing(homepage):
     page = Search(homepage)
     search_value = "בדיקת קלט"
     page.type_in_search_field(search_value)
     assert page.typed_value() == search_value, "הטקסט שהוקלד לא מופיע"
 
-def test_016_no_action_when_search_field_is_empty(homepage):
+def test_021_no_action_when_search_field_is_empty(homepage):
     page = Search(homepage)
     page.clear_search_field()
     page.click_search_button()
     assert homepage.current_url == "https://al-haderech.co.il/", "נכשל: לאחר חיפוש עם שדה ריק, הכתובת לא נשארה עמוד הבית כמצופה"
 
-def test_017_search_valid_input_with_button(homepage):
+def test_022_search_valid_input_with_button(homepage):
     page = Search(homepage)
     search_value = "ברוש"
     page.type_in_search_field(search_value)
@@ -33,7 +33,7 @@ def test_017_search_valid_input_with_button(homepage):
     matching_results = [title for title in titles if search_value.lower() in title.lower()]
     assert len(matching_results) > 0, "לא נמצאה אף תוצאה רלוונטית למילת החיפוש"
 
-def test_025_search_valid_input_with_enter(homepage):
+def test_023_search_valid_input_with_enter(homepage):
     page = Search(homepage)
     search_value = "ברוש"
     page.type_in_search_field(search_value)
@@ -46,7 +46,7 @@ def test_025_search_valid_input_with_enter(homepage):
     matching_results = [title for title in titles if search_value.lower() in title.lower()]
     assert len(matching_results) > 0, "לא נמצאה אף תוצאה רלוונטית למילת החיפוש"
 
-def test_018_search_invalid_input_shows_no_results(homepage):
+def test_024_search_invalid_input_shows_no_results(homepage):
     page = Search(homepage)
     invalid_input = "aa1122"
     page.type_in_search_field(invalid_input)

@@ -35,8 +35,8 @@ class Base:
             self.driver.execute_script("arguments[0].style.outline='2px solid red';", element)
             time.sleep(0.5)  # זמן קצר לראות את ההדגשה
             element.click()
-        except (ElementClickInterceptedException, WebDriverException) as e:
-            print(f"שגיאה בלחיצה רגילה: {e}. מנסה דרך JavaScript...")
+        except Exception as e:
+            print("⚠️ לחיצה רגילה נכשלה. מנסה לבצע לחיצה עם JavaScript...")
             element = WebDriverWait(self.driver, timeout).until(
                 EC.presence_of_element_located(locator)
             )
@@ -61,8 +61,8 @@ class Base:
                 EC.element_to_be_clickable(element)
             )
             element.click()
-        except (ElementClickInterceptedException, WebDriverException) as e:
-            print(f"שגיאה בלחיצה רגילה: {e}. מנסה דרך JavaScript...")
+        except Exception as e:
+            print("⚠️ לחיצה רגילה נכשלה. מנסה לבצע לחיצה עם JavaScript...")
             self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
             self.driver.execute_script("arguments[0].click();", element)
 
