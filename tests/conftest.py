@@ -1,12 +1,13 @@
 import json
 import os
 import pytest
+import allure
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="module")
 def browser():
     driver = webdriver.Chrome()
     driver.maximize_window()
@@ -19,7 +20,14 @@ def homepage(browser):
     return browser
 
 @pytest.fixture
+def logged_out_user(browser):
+    browser.delete_all_cookies()
+    browser.get("https://al-haderech.co.il/")
+    return browser
+
+@pytest.fixture
 def logged_in_user(browser):
+    browser.delete_all_cookies()
     # טוען את פרטי המשתמש
     config_path = os.path.join(os.path.dirname(__file__), "..", "config.json")
     with open(config_path) as f:
@@ -38,6 +46,19 @@ def logged_in_user(browser):
     browser.get("https://al-haderech.co.il/")
     return browser
 
-
+# צילום מסך אוטומטי בטסטים שנכשלים
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    result = outcome.get_result()
+    if result.when == "call" and result.failed:
+        browser = item.funcargs.get("browser")
+        if browser:
+            screenshot = browser.get_screenshot_as_png()
+            allure.attach(
+                screenshot,
+                name="screenshot_on_failure",
+                attachment_type=allure.attachment_type.PNG
+            )
 
 
