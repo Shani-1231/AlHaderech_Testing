@@ -121,7 +121,7 @@ def test_013_clicking_about_us_link_in_footer(homepage):
 def test_014_clicking_instagram_icon_in_footer(homepage):
     page = HomePage(homepage)
     page.open_instagram_page()
-    assert homepage.current_url == "https://www.instagram.com/al_haderech_nursery/"
+    assert homepage.current_url == "https://www.instagram.com/al_haderech_nursery/", "הכתובת לא מתאימה לדף האינסטגרם של האתר"
 
 @pytest.mark.homepage
 @allure.suite("Homepage")
