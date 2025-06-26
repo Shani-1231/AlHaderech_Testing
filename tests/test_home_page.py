@@ -121,7 +121,34 @@ def test_013_clicking_about_us_link_in_footer(homepage):
 def test_014_clicking_instagram_icon_in_footer(homepage):
     page = HomePage(homepage)
     page.open_instagram_page()
-    assert homepage.current_url == "https://www.instagram.com/al_haderech_nursery/", "הכתובת לא מתאימה לדף האינסטגרם של האתר"
+    assert homepage.current_url == "https://www.instagram.com/al_haderech_nursery/", "הכתובת של הטאב שנפתח לא מתאימה לעמוד האינסטגרם של האתר"
+
+@pytest.mark.homepage
+@allure.suite("Homepage")
+@allure.story("Accessibility features")
+@allure.severity(allure.severity_level.NORMAL)
+def test_015_clicking_accessibility_button(homepage):
+    page = HomePage(homepage)
+    page.click_accessibility_btn()
+    assert page.accessibility_toolbar_is_displayed(), "תפריט הנגישות לא נפתח"
+
+@pytest.mark.homepage
+@allure.suite("Homepage")
+@allure.story("Join club button")
+@allure.severity(allure.severity_level.MINOR)
+def test_016_text_of_join_club_button(homepage):
+    page = HomePage(homepage)
+    assert "הצטרפו למועדון" in page.get_join_club_btn_text(), "הטקטסט של כפתור הצטרפות למועדון לא מוצג"
+
+@pytest.mark.homepage
+@allure.suite("Homepage")
+@allure.story("Join club button")
+@allure.severity(allure.severity_level.CRITICAL)
+def test_016_text_of_join_club_button(homepage):
+    page = HomePage(homepage)
+    page.click_join_club_btn()
+    assert homepage.current_url == "https://al-haderech.co.il/items/%d7%97%d7%91%d7%a8%d7%95%d7%aa-%d7%91%d7%9e%d7%95%d7%a2%d7%93%d7%95%d7%9f-%d7%94%d7%9c%d7%a7%d7%95%d7%97%d7%95%d7%aa/", "הכתובת לא מתאימה לעמוד הצטרפות למועדון"
+    assert "מועדון הלקוחות" in homepage.title, "כותרת העמוד לא מתאימה לעמוד 'הצטרפות למועדון'"
 
 @pytest.mark.homepage
 @allure.suite("Homepage")

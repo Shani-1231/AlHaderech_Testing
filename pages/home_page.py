@@ -28,6 +28,9 @@ class HomePage(Base):
     FOOTER_TITLES = (By.TAG_NAME, "h4")
     ABOUT_US_LINK = (By.XPATH, "(//div[@data-id='c4ebfab']//a)[1]")
     INSTAGRAM_ICON = (By.CSS_SELECTOR, ".fa-instagram")
+    ACCESSIBILITY_BTN = (By.ID, "sitelinx-toggle-toolbar")
+    ACCESSIBILITY_TOOLBAR = (By.ID, "sitelinx-toolbar")
+    JOIN_CLUB_BTN = (By.CSS_SELECTOR, "div[data-id='aa97775']")
 
 
     # דוגמה: קריאה לפונקציית selenium עם פירוק טאפל
@@ -101,6 +104,17 @@ class HomePage(Base):
         tabs = self.driver.window_handles
         self.driver.switch_to.window(tabs[1])
 
+    def click_accessibility_btn(self):
+        self.safe_click(self.ACCESSIBILITY_BTN)
+
+    def accessibility_toolbar_is_displayed(self):
+        return self.driver.find_element(*self.ACCESSIBILITY_TOOLBAR).is_displayed()
+
+    def get_join_club_btn_text(self):
+        return self.get_element_text(self.JOIN_CLUB_BTN)
+
+    def click_join_club_btn(self):
+        self.safe_click(self.JOIN_CLUB_BTN)
 
     def get_html_dir(self):
         return self.driver.execute_script("return document.documentElement.getAttribute('dir')")
