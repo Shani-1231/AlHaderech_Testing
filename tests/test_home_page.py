@@ -144,7 +144,7 @@ def test_016_text_of_join_club_button(homepage):
 @allure.suite("Homepage")
 @allure.story("Join club button")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_016_text_of_join_club_button(homepage):
+def test_017_clicking_join_club_button(homepage):
     page = HomePage(homepage)
     page.click_join_club_btn()
     assert homepage.current_url == "https://al-haderech.co.il/items/%d7%97%d7%91%d7%a8%d7%95%d7%aa-%d7%91%d7%9e%d7%95%d7%a2%d7%93%d7%95%d7%9f-%d7%94%d7%9c%d7%a7%d7%95%d7%97%d7%95%d7%aa/", "הכתובת לא מתאימה לעמוד הצטרפות למועדון"
