@@ -1,8 +1,6 @@
-import time
 from selenium.webdriver.common.by import By
-from selenium.webdriver.ie.webdriver import WebDriver
-from selenium.common.exceptions import NoSuchElementException
 from pages.base_page import Base
+
 
 class Login(Base):
     def __init__(self, driver):

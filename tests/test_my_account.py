@@ -6,7 +6,7 @@ from pages.my_account import MyAccount
 @allure.suite("My Account")
 @allure.story("Update personal details")
 @allure.severity(allure.severity_level.NORMAL)
-def test_031_update_account_details(logged_in_user):
+def test_034_update_account_details(logged_in_user):
     page = MyAccount(logged_in_user)
     new_last_name = "כהן"
     page.open_my_account()
@@ -18,7 +18,7 @@ def test_031_update_account_details(logged_in_user):
 @allure.suite("My Account")
 @allure.story("Update shipping address")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_032_update_address(logged_in_user):
+def test_035_update_address(logged_in_user):
     page = MyAccount(logged_in_user)
     new_city = "חולון"
     page.open_my_account()
@@ -31,7 +31,7 @@ def test_032_update_address(logged_in_user):
 @allure.suite("My Account")
 @allure.story("Logout process")
 @allure.severity(allure.severity_level.NORMAL)
-def test_033_logout_process(logged_in_user):
+def test_036_logout_process(logged_in_user):
     page = MyAccount(logged_in_user)
     page.open_my_account()
     page.perform_logout()

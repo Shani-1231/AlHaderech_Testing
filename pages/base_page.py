@@ -1,13 +1,12 @@
 import time
-from selenium.webdriver.ie.webdriver import WebDriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import (
-    TimeoutException,
-    ElementClickInterceptedException,
-    WebDriverException
+    TimeoutException
 )
-from selenium.webdriver.common.by import By
+from selenium.webdriver.ie.webdriver import WebDriver
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
 
 class Base:
     def __init__(self, driver):
@@ -65,7 +64,6 @@ class Base:
             print("⚠️ לחיצה רגילה נכשלה. מנסה לבצע לחיצה עם JavaScript...")
             self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
             self.driver.execute_script("arguments[0].click();", element)
-
         if wait_after_click:
             time.sleep(wait_after_click)
 
@@ -95,4 +93,26 @@ class Base:
         except TimeoutException:
             print(f"שגיאה: לא נמצא טקסט מהאלמנט: {locator}")
             return ""
+
+    def is_element_present(self, locator):
+        """
+        מחזיר True אם האלמנט קיים בדף, אחרת False.
+        """
+        try:
+            self.driver.find_element(*locator)
+            return True
+        except NoSuchElementException:
+            return False
+
+    def wait_for_element(self, locator, timeout=10):
+        """
+        מחכה עד שהאלמנט נראה לעין (visible) ומחזיר אותו.
+        """
+        try:
+            return WebDriverWait(self.driver, timeout).until(
+                EC.visibility_of_element_located(locator)
+            )
+        except TimeoutException:
+            print(f"שגיאה: האלמנט לא הופיע בזמן: {locator}")
+            return None
 
