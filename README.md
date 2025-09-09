@@ -116,6 +116,8 @@ project-root/
 * Some test cases from the STD document are covered as part of broader tests, so numbering may differ.
 * `reports/` (Allure results) is ignored in Git for cleaner repository history.
 * The project includes both code-based tests and a separate STD file with documented test cases.
+* Detailed test cases are available in `STD_TestCases.xlsx` (download to view).
+
 
 ---
 
