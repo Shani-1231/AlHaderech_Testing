@@ -1,41 +1,46 @@
-# פרויקט אוטומציה עם Selenium ו-Python 🧪🕸️
+# Automation Project with Selenium & Python 🧪🕸️
 
-זהו פרויקט בדיקות אוטומטיות עבור אתר מסחר, כחלק מקורס אוטומציה.
+This is an automated testing project for an e-commerce website, created as part of an automation course.
 
-הפרויקט כולל:
-- בדיקות התחברות (חיוביות ושליליות)
-- בדיקות עמוד הבית, חיפוש, ו"אזור אישי"
-- שימוש ב־ Page Object Model (כולל קלאס בסיס)
-- שימוש במרקרים להרצות ממוקדות
-- תיוגים ל־Allure (Suite, Story, Severity)
-- צילום מסך אוטומטי כאשר טסט נכשל
+The project includes:
+
+* Login tests (positive & negative)
+* Tests for Homepage, Search, My Account, and Cart
+* Page Object Model (with a Base Page class)
+* Pytest markers for selective test runs
+* Allure reporting with tags (Suite, Story, Severity)
+* Automatic screenshot capture on test failures
 
 ---
 
-## 🚀 הרצת הטסטים
+## 🚀 Running the Tests
 
-יש לוודא שהחבילות הדרושות מותקנות:
+Make sure all required dependencies are installed:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### הרצה רגילה:
+### Run all tests:
+
 ```bash
 pytest
 ```
 
-### הרצת טסטים לפי קובץ:
+### Run tests from a specific file:
+
 ```bash
 pytest tests/test_login.py
 ```
 
-### הרצה לפי מרקר:
+### Run tests by marker:
+
 ```bash
 pytest -m search
 ```
 
-### הרצה עם Allure:
+### Run with Allure report:
+
 ```bash
 pytest --alluredir=reports/
 allure serve reports/
@@ -43,12 +48,12 @@ allure serve reports/
 
 ---
 
-## 🔐 קובץ התחברות – `config.json`
+## 🔐 Login Configuration – `config.json`
 
-הפרויקט כולל טסטים הדורשים פרטי התחברות (username + password).  
-**הקובץ אינו כלול בריפוזיטורי מטעמי אבטחה.**
+Some tests require login credentials (username + password).
+**This file is excluded from the repository for security reasons.**
 
-יש ליצור קובץ חדש בשם `config.json` לפי הדוגמה:
+Create a new file named `config.json` with the following structure:
 
 ```json
 {
@@ -57,55 +62,61 @@ allure serve reports/
 }
 ```
 
+You can also use the provided `config.json.example` as a template.
+
 ---
 
-## 📁 מבנה התיקיות
+## 📁 Project Structure
 
 ```plaintext
 project-root/
 │
-├── pages/                   # קלאסי Page Object לכל עמוד
+├── pages/                   # Page Object classes for each page
 │   ├── base_page.py
-│   ├── login_page.py
+│   ├── login.py
 │   ├── home_page.py
 │   ├── search.py
-│   └── my_account_page.py
+│   ├── my_account.py
+│   └── cart_area.py
 │
-├── tests/                   # קבצי טסטים + conftest
+├── tests/                   # Test files + conftest
 │   ├── conftest.py
 │   ├── test_login.py
-│   ├── test_homepage.py
+│   ├── test_home_page.py
 │   ├── test_search.py
-│   └── test_my_account.py
+│   ├── test_my_account.py
+│   └── test_cart.py
 │
-├── config.json              # קובץ פרטי (לא עולה ל-Git)
-├── config.json.example      # קובץ לדוגמה
-├── requirements.txt         # כל התלויות של הפרויקט
-├── pytest.ini               # הגדרות מרקרים והרצות
-├── reports/                 # דוחות Allure (נמצא ב-.gitignore)
-├── .gitignore               # קבצים שיש להחריג מגיט
-└── README.md                # תיעוד הפרויקט
+├── config.json              # Private file (excluded from Git)
+├── config.json.example      # Example config file
+├── requirements.txt         # Project dependencies
+├── pytest.ini               # Pytest markers & configuration
+├── reports/                 # Allure reports (in .gitignore)
+├── STD_TestCases.xlsx       # Test cases documentation
+├── .gitignore
+└── README.md
 ```
 
 ---
 
-## 🧩 טכנולוגיות בשימוש
+## 🧩 Technologies Used
 
-- Python 3.10+
-- Selenium
-- Pytest
-- Allure
-- Page Object Model
-
----
-
-## 📌 הערות
-
-- הסיסמאות והנתונים האישיים מאוחסנים בקובץ חיצוני (`config.json`) שלא עולה ל־GitHub.
-- הטסטים נבדקו על דפדפן Google Chrome.
-- חלק ממקרי הבדיקה במסמך STD מכוסים כחלק מטסטים רחבים יותר – לכן ייתכנו פערים במספור.
-- תיקיית `reports/` (דוחות Allure) קיימת אך לא נכללת ב־Git לצורך ניקיון והימנעות מקבצים זמניים.
+* Python 3.10+
+* Selenium
+* Pytest
+* Allure
+* Page Object Model
 
 ---
 
-בהצלחה! 😊
+## 📌 Notes
+
+* Credentials are stored in an external `config.json` file (not included in GitHub).
+* Tests were executed on Google Chrome.
+* Some test cases from the STD document are covered as part of broader tests, so numbering may differ.
+* `reports/` (Allure results) is ignored in Git for cleaner repository history.
+* The project includes both code-based tests and a separate STD file with documented test cases.
+
+---
+
+✅ Ready to run and extend!

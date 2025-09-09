@@ -90,7 +90,6 @@ class CartArea(Base):
                 "arguments[0].click();",
                 self.driver.find_element(*self.REMOVE_BTN)
             )
-            # המתנה שהכפתור ייעלם (כלומר שהפריט יוסר)
             WebDriverWait(self.driver, 5).until(EC.staleness_of(self.driver.find_element(*self.REMOVE_BTN)))
             print("הפריט הוסר בהצלחה.")
         except Exception as e:

@@ -2,6 +2,7 @@ import pytest
 import allure
 from pages.search import Search
 from pages.cart_area import CartArea
+from pages.home_page import HomePage
 
 @pytest.mark.cart
 @allure.suite("Cart")
@@ -54,6 +55,25 @@ def test_027_remove_item_from_cart(logged_in_user):
     titles = cart_page.get_all_titles_in_cart()
     assert titles == [], "העגלה לא ריקה כמצופה"
 
+@pytest.mark.cart
+@allure.suite("Cart")
+@allure.story("Cart persists after navigation")
+@allure.severity(allure.severity_level.CRITICAL)
+def test_028_cart_persistence_after_navigation(logged_in_user):
+    cart_page = CartArea(logged_in_user)
+    search_page = Search(logged_in_user)
+    h_page = HomePage(logged_in_user)
+    cart_page.remove_all_items()
+    search_value = "זית"
+    search_page.type_in_search_field(search_value)
+    search_page.click_search_button()
+    cart_page.add_item_by_index(1, expected_qty_after=1)
+    assert cart_page.get_cart_icon_qty() == 1, "אחרי הוספת פריט, המספר על אייקון העגלה לא 1"
+    h_page.click_about_us_link()
+    assert cart_page.get_cart_icon_qty() == 1, " לאחר ניווט לעמוד אחר, המספר על אייקון העגלה לא נשאר 1"
+    cart_page.click_cart_icon()
+    titles = cart_page.get_all_titles_in_cart()
+    assert titles[0] == "זית 10 ל'", "כותרת הפריט בעגלה שונה מהמצופה"
 
 
 
